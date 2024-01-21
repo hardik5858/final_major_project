@@ -1,7 +1,10 @@
 import 'package:final_major_project/firebase_options.dart';
+import 'package:final_major_project/page/admin/admin_home_page.dart';
+import 'package:final_major_project/page/admin/login_admin.dart';
 import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:final_major_project/page/registration_page.dart';
+import 'package:final_major_project/page/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -23,12 +26,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Ticket Booking",
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-          primaryColor: Colors.orange
-        // useMaterial3: true
-      ),
-      home: HomePage(),
+
+
+      home:Admin_Home_Page(),
       routes: {
         MyRoutes.homepage:(context)=>HomePage(),
         MyRoutes.registrationpage:(context)=>Registration_Page(),
@@ -37,3 +37,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+OutlineInputBorder defaultOutlineInputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(14),
+  borderSide: const BorderSide(color: Color(0xFFF3F3F3)),
+);

@@ -29,7 +29,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                     indent: 10,
                     endIndent: 10,
                   ),
-                  Slider_Indicator()
+                  // Slider_Indicator()
                 ]
         ),
       )

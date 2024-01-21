@@ -1,3 +1,4 @@
+import 'package:final_major_project/backend/firestor_backend.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -30,9 +31,16 @@ class _Search_busState extends State<Search_bus> {
     return retval;
   }
 
+  bool _error_value=false;
   MoveToResult(){
      if(_formkey.currentState!.validate()){
-
+       setState(() {
+         _error_value=false;
+       });
+     }else{
+       setState(() {
+         _error_value=true;
+       });
      }
   }
 
@@ -40,6 +48,7 @@ class _Search_busState extends State<Search_bus> {
   Widget build(BuildContext context) {
     return Form(
       key: _formkey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child:Container(
           margin: EdgeInsets.only(left: 5,right: 5),
           padding: EdgeInsets.all(10),
@@ -94,6 +103,14 @@ class _Search_busState extends State<Search_bus> {
                           }
                           return null;
                         },
+                        onTap: (){
+                         if(_error_value){
+                           setState(() {
+                             _formkey.currentState?.reset();
+                             _error_value=false;
+                           });
+                         }
+                        },
                       ),
                     ),
                     SizedBox(
@@ -132,6 +149,14 @@ class _Search_busState extends State<Search_bus> {
                             return re;
                           }
                           return null;
+                        },
+                        onTap: (){
+                          if(_error_value){
+                            setState(() {
+                              _formkey.currentState?.reset();
+                              _error_value=false;
+                            });
+                          }
                         },
                       ),
                     )
@@ -182,6 +207,7 @@ class _Search_busState extends State<Search_bus> {
                   splashColor: Colors.black26,
                   onTap: (){
                     MoveToResult();
+                    add_Userdata();
                   },
                   child: AnimatedContainer(
                     decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:final_major_project/backend/firebase_backend.dart';
+import 'package:final_major_project/page/admin/login_admin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,12 +25,11 @@ class _Login_PageState extends State<Login_Page> {
       firebase_login(context, _LoginEmail, _LoginPassword);
     }
   }
-  void onChange() {
-    setState(() {
-      _formKey.currentState?.reset();
-    });
-  }
-
+  // void onChange() {
+  //   setState(() {
+  //     _formKey.currentState?.reset();
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -80,7 +80,6 @@ class _Login_PageState extends State<Login_Page> {
                               if(!ValidEmail){
                                 return "Enter Valid Email";
                               }
-
                               return null;
                             },
                           ),
@@ -153,7 +152,16 @@ class _Login_PageState extends State<Login_Page> {
                         ],
                       ),
                     ),
-                  ))
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Admin()));
+                      },
+                      child: Text("Admin Login Page",style: TextStyle(fontSize: 15,color: Colors.blue)))
+                ],)
             ],
           ),
         )

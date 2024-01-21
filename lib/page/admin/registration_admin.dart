@@ -1,57 +1,52 @@
-import 'package:final_major_project/backend/firebase_backend.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:final_major_project/my_routes.dart';
+import 'package:final_major_project/page/admin/login_admin.dart';
 import 'package:flutter/material.dart';
 
-import '../my_routes.dart';
-
-class Registration_Page extends StatefulWidget {
-  const Registration_Page({super.key});
+class Registration_Admin extends StatefulWidget {
+  const Registration_Admin({super.key});
 
   @override
-  State<Registration_Page> createState() => _Registration_PageState();
+  State<Registration_Admin> createState() => _Registration_AdminState();
 }
 
-class _Registration_PageState extends State<Registration_Page> {
-  TextEditingController _ReEmail = TextEditingController();
-  TextEditingController _RePassword = TextEditingController();
-  TextEditingController _CoRePassword = TextEditingController();
+class _Registration_AdminState extends State<Registration_Admin> {
+  TextEditingController _ReAdminEmail=TextEditingController();
+  TextEditingController _ReAdminPassword=TextEditingController();
+  TextEditingController _ReAdminCoPassword=TextEditingController();
 
   String Email="",RPassword="",CoPassword="";
   final _formKey=GlobalKey<FormState>();
   bool passTogle = false;
   bool CopassTogle=false;
 
-  MoveToHome() async {
-    if(_formKey.currentState!.validate()) {
-      _formKey.currentState?.save();
-      firebase_create_user(context, _ReEmail, _RePassword);
-      _ReEmail.clear();
-      _RePassword.clear();
-      _CoRePassword.clear();
+  bool _error_value=false;
+  MoveToHome(){
+    if(_formKey.currentState!.validate()){
+      setState(() {
+        _error_value=false;
+      });
+    }else{
+      setState(() {
+        _error_value=true;
+      });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Theme
-      //     .of(context)
-      //     .colorScheme
-      //     .inversePrimary,
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 80,),
-            Text("Registration",
+            Text("Admin Registration",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
             SizedBox(height: 80,),
             Form(
                 key: _formKey,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration:BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           width: 1,
@@ -60,12 +55,12 @@ class _Registration_PageState extends State<Registration_Page> {
                       color: Colors.white
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(10),
                     child: Column(
                       children: [
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          controller: _ReEmail,
+                          controller: _ReAdminEmail,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -89,13 +84,18 @@ class _Registration_PageState extends State<Registration_Page> {
                             }
                             return null;
                           },
-                          onChanged: (value){
-                            Email=value.toString();
+                          onTap: (){
+                            if(_error_value){
+                              setState(() {
+                                _formKey.currentState?.reset();
+                                _error_value=false;
+                              });
+                            }
                           },
                         ),
                         SizedBox(height: 20,),
                         TextFormField(
-                          controller: _RePassword,
+                          controller: _ReAdminPassword,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -124,14 +124,11 @@ class _Registration_PageState extends State<Registration_Page> {
                             }
                           },
                           obscureText: !passTogle,
-                          onChanged: (value){
-                            RPassword=value.toString();
-                          },
                         ),
                         SizedBox(height: 20,),
                         TextFormField(
-                          controller: _CoRePassword,
-                          decoration: InputDecoration(
+                          controller: _ReAdminCoPassword,
+                          decoration:  InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide(
@@ -155,14 +152,11 @@ class _Registration_PageState extends State<Registration_Page> {
                             if (value!.isEmpty) {
                               return "This Field is Empty";
                             }
-                            if(_RePassword.text != _CoRePassword.text){
+                            if(_ReAdminPassword.text != _ReAdminCoPassword.text){
                               return "Password is incurrcet";
                             }
                           },
                           obscureText: !CopassTogle,
-                          onChanged: (value){
-                            CoPassword=value.toString();
-                          },
                         ),
                         SizedBox(height: 30,),
                         Material(
@@ -170,8 +164,7 @@ class _Registration_PageState extends State<Registration_Page> {
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
                             splashColor: Colors.amber,
-                            onTap: () {
-                              print("pass $RPassword");
+                            onTap: (){
                               MoveToHome();
                             },
                             child: AnimatedContainer(
@@ -179,24 +172,18 @@ class _Registration_PageState extends State<Registration_Page> {
                               width: 180,
                               height: 50,
                               alignment: Alignment.center,
-                              child: Text("Registration..",
-                                style: TextStyle(fontWeight: FontWeight.bold,
-                                    fontSize: 20),),
-
+                              child: Text("Registration...",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                             ),
                           ),
                         ),
                         SizedBox(height: 30,),
                         Row(
                           children: [
-                            TextButton(
-                                onPressed: (){
-                                  Navigator.pushNamed(context, MyRoutes.loginpage);
-                                },
-                                child: Text("< Login Screen",style: TextStyle(fontSize: 15,color: Colors.blue),))
+                            TextButton(onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Admin()));
+                            }, child: Text("< Admin Login Screen",style: TextStyle(fontSize: 15,color: Colors.blue)))
                           ],
                         )
-
                       ],
                     ),
                   ),
