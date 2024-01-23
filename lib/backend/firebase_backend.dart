@@ -9,8 +9,8 @@ import '../my_routes.dart';
 void firebase_login (BuildContext context,TextEditingController _LoginEmail,TextEditingController _LoginPassword) async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _LoginEmail.text,
-          password: _LoginPassword.text
+         email: "hardik12@gmail.com",
+        password: "hardik12",
       );
       Navigator.pushNamed(context, MyRoutes.homepage);
       _LoginEmail.clear();
@@ -41,20 +41,37 @@ void firebase_create_user(BuildContext context,TextEditingController _ReEmail,Te
       email: _ReEmail.text,
       password: _RePassword.text,
     );
+    print("Sucsessful");
     Navigator.pushNamed(context, MyRoutes.homepage);
-
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       print('The password provided is too weak.');
     } else if (e.code == 'email-already-in-use') {
       print('The account already exists for that email.');
-    } else{
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Fill propar detail")));
     }
   } catch (e) {
     print(e);
   }
+
+  // try {
+  //   final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //     email: _ReEmail.text,
+  //     password: _RePassword.text,
+  //   );
+  //   Navigator.pushNamed(context, MyRoutes.homepage);
+  //
+  // } on FirebaseAuthException catch (e) {
+  //   if (e.code == 'weak-password') {
+  //     print('The password provided is too weak.');
+  //   } else if (e.code == 'email-already-in-use') {
+  //     print('The account already exists for that email.');
+  //   } else{
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //         content: Text("Fill propar detail")));
+  //   }
+  // } catch (e) {
+  //   print(e);
+  // }
 }
 
 

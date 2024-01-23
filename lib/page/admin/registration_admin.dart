@@ -1,3 +1,4 @@
+import 'package:final_major_project/backend/firebase_backend.dart';
 import 'package:final_major_project/my_routes.dart';
 import 'package:final_major_project/page/admin/login_admin.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,11 @@ class _Registration_AdminState extends State<Registration_Admin> {
   bool CopassTogle=false;
 
   bool _error_value=false;
-  MoveToHome(){
+  Admin_Authantication(){
     if(_formKey.currentState!.validate()){
+      print("its ok");
+      print("heelo ${_ReAdminEmail} and $_ReAdminPassword");
+      // admin_create(context, _ReAdminEmail, _ReAdminPassword);
       setState(() {
         _error_value=false;
       });
@@ -165,7 +169,7 @@ class _Registration_AdminState extends State<Registration_Admin> {
                           child: InkWell(
                             splashColor: Colors.amber,
                             onTap: (){
-                              MoveToHome();
+                              Admin_Authantication();
                             },
                             child: AnimatedContainer(
                               duration: Duration(seconds: 1),

@@ -1,5 +1,6 @@
 import 'package:final_major_project/firebase_options.dart';
 import 'package:final_major_project/page/admin/admin_home_page.dart';
+import 'package:final_major_project/page/admin/bus_ticket_data.dart';
 import 'package:final_major_project/page/admin/login_admin.dart';
 import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
@@ -26,9 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Ticket Booking",
-
-
-      home:Admin_Home_Page(),
+      theme: ThemeData(
+      ),
+      home:Splash_Screen(),
       routes: {
         MyRoutes.homepage:(context)=>HomePage(),
         MyRoutes.registrationpage:(context)=>Registration_Page(),
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-OutlineInputBorder defaultOutlineInputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(14),
-  borderSide: const BorderSide(color: Color(0xFFF3F3F3)),
-);
+// OutlineInputBorder defaultOutlineInputBorder = OutlineInputBorder(
+//   borderRadius: BorderRadius.circular(14),
+//   borderSide: const BorderSide(color: Color(0xFFF3F3F3)),
+// );

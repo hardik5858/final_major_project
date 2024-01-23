@@ -1,3 +1,4 @@
+import 'package:final_major_project/backend/firebase_backend.dart';
 import 'package:final_major_project/page/admin/registration_admin.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,14 @@ class _Login_AdminState extends State<Login_Admin> {
   bool passTogle=false;
 
   bool _error_value=false;
-  MoveToHome(){
+  Admin_Authantication(){
     if(_formKey.currentState!.validate()){
+      // admin_login(context, _LoginAdminEmail, _LoginAdminPassword);
       setState(() {
         _error_value=false;
       });
+      _LoginAdminEmail.clear();
+      _LoginAdminPassword.clear();
     }else{
       setState(() {
         _error_value=true;
@@ -134,7 +138,7 @@ class _Login_AdminState extends State<Login_Admin> {
                           child: InkWell(
                             splashColor: Colors.amber,
                             onTap: (){
-                              MoveToHome();
+                              Admin_Authantication();
                             },
                             child:AnimatedContainer(
                               duration: Duration(seconds: 1),

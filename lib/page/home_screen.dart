@@ -1,3 +1,4 @@
+import 'package:final_major_project/backend/firebase_backend.dart';
 import 'package:final_major_project/widget/search_bus.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_major_project/widget/slider.dart';
@@ -30,6 +31,10 @@ class _Home_ScreenState extends State<Home_Screen> {
                     endIndent: 10,
                   ),
                   // Slider_Indicator()
+                  ElevatedButton(onPressed: (){
+                    signOut();
+                  },
+                      child: Text("Sign out",style: TextStyle(fontSize: 20),))
                 ]
         ),
       )

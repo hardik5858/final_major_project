@@ -21,6 +21,7 @@ class _Registration_PageState extends State<Registration_Page> {
   bool passTogle = false;
   bool CopassTogle=false;
 
+  bool _error_value=false;
   MoveToHome() async {
     if(_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
@@ -28,6 +29,13 @@ class _Registration_PageState extends State<Registration_Page> {
       _ReEmail.clear();
       _RePassword.clear();
       _CoRePassword.clear();
+      setState(() {
+        _error_value=false;
+      });
+    }else{
+      setState(() {
+        _error_value=true;
+      });
     }
   }
 
@@ -92,6 +100,14 @@ class _Registration_PageState extends State<Registration_Page> {
                           onChanged: (value){
                             Email=value.toString();
                           },
+                          onTap: (){
+                            if(_error_value){
+                              setState(() {
+                                _formKey.currentState?.reset();
+                                _error_value=false;
+                              });
+                            }
+                          },
                         ),
                         SizedBox(height: 20,),
                         TextFormField(
@@ -126,6 +142,14 @@ class _Registration_PageState extends State<Registration_Page> {
                           obscureText: !passTogle,
                           onChanged: (value){
                             RPassword=value.toString();
+                          },
+                          onTap: (){
+                            if(_error_value){
+                              setState(() {
+                                _formKey.currentState?.reset();
+                                _error_value=false;
+                              });
+                            }
                           },
                         ),
                         SizedBox(height: 20,),
@@ -162,6 +186,14 @@ class _Registration_PageState extends State<Registration_Page> {
                           obscureText: !CopassTogle,
                           onChanged: (value){
                             CoPassword=value.toString();
+                          },
+                          onTap: (){
+                            if(_error_value){
+                              setState(() {
+                                _formKey.currentState?.reset();
+                                _error_value=false;
+                              });
+                            }
                           },
                         ),
                         SizedBox(height: 30,),

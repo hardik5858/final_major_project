@@ -39,12 +39,13 @@ class _HomePageState extends State<HomePage> {
             boxShadow: [
                 BoxShadow(
                   color: Colors.black,
-                  blurRadius: 25
+                  blurRadius: 25,
                 )
               ]),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: BottomNavigationBar(
+            elevation: 10,
             backgroundColor: Color.fromARGB(255, 236, 236, 236),
               selectedItemColor: Color.fromARGB(255, 9, 9, 9),
               unselectedItemColor: Color.fromARGB(255, 79, 79, 79),

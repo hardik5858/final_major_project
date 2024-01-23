@@ -19,17 +19,22 @@ class _Login_PageState extends State<Login_Page> {
   TextEditingController _LoginPassword=TextEditingController();
   bool passTogle=false;
 
+  bool _error_value=false;
 
   MoveToHome()async{
     if(_formKey.currentState!.validate()){
       firebase_login(context, _LoginEmail, _LoginPassword);
+      _LoginEmail.clear();
+      _LoginPassword.clear();
+      setState(() {
+        _error_value=false;
+      });
+    }else{
+      setState(() {
+        _error_value=true;
+      });
     }
   }
-  // void onChange() {
-  //   setState(() {
-  //     _formKey.currentState?.reset();
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -82,6 +87,14 @@ class _Login_PageState extends State<Login_Page> {
                               }
                               return null;
                             },
+                            onTap: (){
+                              if(_error_value){
+                                setState(() {
+                                  _formKey.currentState?.reset();
+                                  _error_value=false;
+                                });
+                              }
+                            },
                           ),
                           SizedBox(height: 20,),
                           TextFormField(
@@ -110,6 +123,14 @@ class _Login_PageState extends State<Login_Page> {
                                 return "This Field is Empty";
                               }else if(value.length <8){
                                 return "Password lengh should be atlest 8 charecter";
+                              }
+                            },
+                            onTap: (){
+                              if(_error_value){
+                                setState(() {
+                                  _formKey.currentState?.reset();
+                                  _error_value=false;
+                                });
                               }
                             },
                             obscureText: !passTogle,
