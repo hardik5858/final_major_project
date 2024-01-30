@@ -1,4 +1,5 @@
 import 'package:final_major_project/backend/firestor_backend.dart';
+import 'package:final_major_project/page/result_bus_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +14,7 @@ class _Search_busState extends State<Search_bus> {
   TextEditingController _from =TextEditingController();
   TextEditingController _to=TextEditingController();
   TextEditingController _date=TextEditingController();
+  DateTime selectedDate = DateTime.now();
 
   final _formkey=GlobalKey<FormState>();
 
@@ -34,6 +36,8 @@ class _Search_busState extends State<Search_bus> {
   bool _error_value=false;
   MoveToResult(){
      if(_formkey.currentState!.validate()){
+       final Search_Data search_data=Search_Data(_from, _to, _date,selectedDate);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Search_Result_Bus(search_data: search_data)));
        setState(() {
          _error_value=false;
        });
@@ -42,6 +46,32 @@ class _Search_busState extends State<Search_bus> {
          _error_value=true;
        });
      }
+  }
+
+  //user date select
+  String formatDateTime(DateTime dateTime) {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime tomorrow = today.add(Duration(days: 1));
+
+    if (dateTime.isAtSameMomentAs(today)) {
+      String formattedDate = DateFormat("yyyy-MM-dd ").format(dateTime);
+      formattedDate=formattedDate+DateFormat("hh:mm a").format(now);
+      // Parse the formatted date string into a DateTime variable
+      selectedDate = DateFormat("yyyy-MM-dd hh:mm a").parse(formattedDate);
+      print('Parsed DateTime: $selectedDate');
+      print(formattedDate);
+      return 'Today ${DateFormat('DD-MM hh:mm a').format(selectedDate)}';
+    } else if (dateTime.isAtSameMomentAs(tomorrow)) {
+      String formattedDate = DateFormat('yyyy-MM-dd hh:mm a').format(dateTime);
+      selectedDate=DateFormat("yyyy-MM-dd hh:mm a").parse(formattedDate);
+      print(formattedDate);
+      return 'Tomorrow ${DateFormat('hh:mm a').format(dateTime)}';
+    } else {
+      String formattedDate = DateFormat('yyyy-MM-dd hh:mm a').format(dateTime);
+      selectedDate=DateFormat("yyyy-MM-dd hh:mm a").parse(formattedDate);
+      return DateFormat('MMM dd, yyyy hh:mm a').format(dateTime);
+    }
   }
 
   @override
@@ -185,15 +215,17 @@ class _Search_busState extends State<Search_bus> {
                     hintText: "Select date"
                   ),
                   onTap: () async{
-                    DateTime? datePicker=await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2025));
-                    if(datePicker != null){
-                      setState(() {
-                        _date.text= DateFormat("dd-MM-yyyy").format(DateTime.now()) ;
-                      });
+                    DateTime? selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2025),
+                    );
+
+                    if (selectedDate != null) {
+                      String formattedDateTime = formatDateTime(selectedDate);
+                      _date.text= formatDateTime(selectedDate);
+                      print('Selected Date: $formattedDateTime');
                     }
                   },
                 ),
@@ -231,3 +263,10 @@ class _Search_busState extends State<Search_bus> {
   }
 }
 
+class Search_Data{
+  TextEditingController from;
+  TextEditingController to;
+  TextEditingController date;
+  DateTime selectedDate;
+  Search_Data(this.from,this.to,this.date,this.selectedDate);
+}

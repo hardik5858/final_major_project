@@ -19,7 +19,7 @@ class _Login_AdminState extends State<Login_Admin> {
   bool _error_value=false;
   Admin_Authantication(){
     if(_formKey.currentState!.validate()){
-      // admin_login(context, _LoginAdminEmail, _LoginAdminPassword);
+      admin_login(context, _LoginAdminEmail, _LoginAdminPassword);
       setState(() {
         _error_value=false;
       });

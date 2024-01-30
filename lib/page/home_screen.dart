@@ -32,7 +32,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                   ),
                   // Slider_Indicator()
                   ElevatedButton(onPressed: (){
-                    signOut();
+                    signOut(context);
                   },
                       child: Text("Sign out",style: TextStyle(fontSize: 20),))
                 ]

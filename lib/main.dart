@@ -1,10 +1,10 @@
 import 'package:final_major_project/firebase_options.dart';
 import 'package:final_major_project/page/admin/admin_home_page.dart';
-import 'package:final_major_project/page/admin/bus_ticket_data.dart';
 import 'package:final_major_project/page/admin/login_admin.dart';
 import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:final_major_project/page/registration_page.dart';
+import 'package:final_major_project/page/result_bus_data.dart';
 import 'package:final_major_project/page/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +26,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Ticket Booking",
       theme: ThemeData(
       ),
-      home:Splash_Screen(),
+      home:HomePage(),
       routes: {
         MyRoutes.homepage:(context)=>HomePage(),
         MyRoutes.registrationpage:(context)=>Registration_Page(),

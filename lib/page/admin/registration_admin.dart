@@ -25,10 +25,11 @@ class _Registration_AdminState extends State<Registration_Admin> {
     if(_formKey.currentState!.validate()){
       print("its ok");
       print("heelo ${_ReAdminEmail} and $_ReAdminPassword");
-      // admin_create(context, _ReAdminEmail, _ReAdminPassword);
+      admin_create(context, _ReAdminEmail, _ReAdminPassword);
       setState(() {
         _error_value=false;
       });
+
     }else{
       setState(() {
         _error_value=true;
