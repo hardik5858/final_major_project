@@ -5,6 +5,7 @@ import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:final_major_project/page/registration_page.dart';
 import 'package:final_major_project/page/result_bus_data.dart';
+import 'package:final_major_project/page/select_ticket.dart';
 import 'package:final_major_project/page/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: "Ticket Booking",
       theme: ThemeData(
       ),
-      home:HomePage(),
+      home:Select_User_Ticket(),
       routes: {
         MyRoutes.homepage:(context)=>HomePage(),
         MyRoutes.registrationpage:(context)=>Registration_Page(),
