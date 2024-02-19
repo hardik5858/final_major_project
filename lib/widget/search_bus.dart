@@ -61,7 +61,7 @@ class _Search_busState extends State<Search_bus> {
       selectedDate = DateFormat("yyyy-MM-dd hh:mm a").parse(formattedDate);
       print('Parsed DateTime: $selectedDate');
       print(formattedDate);
-      return 'Today ${DateFormat('DD-MM hh:mm a').format(selectedDate)}';
+      return 'Today ${DateFormat('dd-MM hh:mm a').format(selectedDate)}';
     } else if (dateTime.isAtSameMomentAs(tomorrow)) {
       String formattedDate = DateFormat('yyyy-MM-dd hh:mm a').format(dateTime);
       selectedDate=DateFormat("yyyy-MM-dd hh:mm a").parse(formattedDate);
@@ -239,7 +239,6 @@ class _Search_busState extends State<Search_bus> {
                   splashColor: Colors.black26,
                   onTap: (){
                     MoveToResult();
-                    add_Userdata();
                   },
                   child: AnimatedContainer(
                     decoration: BoxDecoration(

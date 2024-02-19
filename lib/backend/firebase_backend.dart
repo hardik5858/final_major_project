@@ -13,8 +13,8 @@ import '../my_routes.dart';
 void firebase_login (BuildContext context,TextEditingController _LoginEmail,TextEditingController _LoginPassword) async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-         email: "hardik12@gmail.com",
-        password: "hardik12",
+         email: _LoginEmail.text,
+        password: _LoginPassword.text,
       );
       Navigator.pushNamed(context, MyRoutes.homepage);
       _LoginEmail.clear();
@@ -50,8 +50,6 @@ void firebase_create_user(BuildContext context,TextEditingController _ReEmail,Te
     String uid=FirebaseAuth.instance.currentUser?.uid ?? "";
     setUserType("user",uid,_ReEmail,_RePassword);
     Navigator.pushNamed(context, MyRoutes.homepage);
-
-
   }catch (e) {
     print(e);
   }

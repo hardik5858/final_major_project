@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../backend/variable_data.dart';
 import 'home_page.dart';
 
 class Splash_Screen extends StatefulWidget {
@@ -20,12 +21,14 @@ class _Splash_ScreenState extends State<Splash_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 200), () {
+    Timer(Duration(seconds: 2), () {
       if (FirebaseAuth.instance.currentUser != null) {
         print(FirebaseAuth.instance.currentUser?.uid);
         final currentUser = FirebaseAuth.instance.currentUser;
         String? ui = currentUser?.uid;
         String? em = currentUser?.email;
+        Data_Variable.useruid=currentUser!.uid;
+        Data_Variable.userEmailId=currentUser!.email!;
         print("uid $ui and $em");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));

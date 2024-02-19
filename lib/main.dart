@@ -1,12 +1,17 @@
 import 'package:final_major_project/firebase_options.dart';
 import 'package:final_major_project/page/admin/admin_home_page.dart';
+import 'package:final_major_project/page/admin/admin_home_screen.dart';
 import 'package:final_major_project/page/admin/login_admin.dart';
+import 'package:final_major_project/page/confirm%20ticket.dart';
 import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:final_major_project/page/registration_page.dart';
 import 'package:final_major_project/page/result_bus_data.dart';
 import 'package:final_major_project/page/select_ticket.dart';
 import 'package:final_major_project/page/splash_screen.dart';
+import 'package:final_major_project/temp.dart';
+import 'package:final_major_project/temp2.dart';
+import 'package:final_major_project/page/select_ticket_sit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -30,12 +35,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Ticket Booking",
       theme: ThemeData(
+        useMaterial3: true
       ),
-      home:Select_User_Ticket(),
+      home:Splash_Screen(),
       routes: {
-        MyRoutes.homepage:(context)=>HomePage(),
-        MyRoutes.registrationpage:(context)=>Registration_Page(),
-        MyRoutes.loginpage:(context)=>Login_Page()
+        '/user_login_page':(context)=>Login_Page(),
+        '/user_registration':(context)=>Registration_Page(),
+        '/user_homepage':(context)=>HomePage(),
       },
     );
   }

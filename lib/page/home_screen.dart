@@ -15,6 +15,7 @@ class _Home_ScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: Text("Ticket booking"),),
       backgroundColor:Color.fromARGB(255, 244, 244, 244),
       body: SingleChildScrollView(
         child: Column(

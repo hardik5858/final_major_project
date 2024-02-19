@@ -20,7 +20,7 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
 
   final _formkey=GlobalKey<FormState>();
   List<String> bus_types=["LOCAL","EXPRESS","SLEEPER COACH","VOLVO"];
-  String selectedValue="Local";
+  String selectedValue="LOCAL";
 
   List<String> cityName=['ahmedabad','amreli','anand','aravalli','banaskantha','bharuch','bhavnagar','botad','chhota udaipur','dahod','dang','devbhumi dwarka','gandhinagar','gir somnath','jamnagar','kheda','kutch','mahisagar','mehsana','morbi','narmada','navsari','panchmahal','patan','porbandar','rajkot','sabarkantha','surat','surendranagar','tapi','vadodara','valsad'];
 
@@ -37,10 +37,23 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
     return retval;
   }
 
+
   bool _error_value=false;
   Add_Data()async{
     if(_formkey.currentState!.validate()){
-      bool reset=await setBusDetail(_add_form, _add_to, _add_start, _add_end, _add_price, _add_sits,_add_bus_name ,selectedValue);
+
+      Store_Bus_Data store_bus_data=new Store_Bus_Data();
+      store_bus_data.from=_add_form.text;
+      store_bus_data.to=_add_to.text;
+      store_bus_data.start_time=_add_start.text;
+      store_bus_data.end_time=_add_end.text;
+      store_bus_data.bus_name=_add_bus_name.text;
+      store_bus_data.bus_type=selectedValue;
+      store_bus_data.price=int.parse(_add_price.text);
+      store_bus_data.sits=int.parse(_add_sits.text);
+
+      // bool reset=await setBusDetail(_add_form, _add_to, _add_start, _add_end, _add_price, _add_sits,_add_bus_name ,selectedValue);
+      bool reset=await setBusDetail2(store_bus_data);
         print("hello $reset");
 
       setState(() {
@@ -51,6 +64,7 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
           _add_end.clear();
           _add_price.clear();
           _add_sits.clear();
+          _add_bus_name.clear();
           selectedValue=bus_types[0];
         }
         _error_value=false;
@@ -430,6 +444,9 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                                 splashColor: Colors.amber,
                                 onTap: (){
                                   Add_Data();
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text("Add Data Successfully"),
+                                  ));
                                 },
                                 child: AnimatedContainer(
                                   duration: Duration(seconds: 1),
@@ -453,4 +470,16 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
       ),
     );
   }
+}
+
+
+class Store_Bus_Data{
+  String from="";
+  String to="";
+  String start_time="";
+  String end_time="";
+  String bus_name="";
+  String bus_type="";
+  int price=0;
+  int sits=0;
 }

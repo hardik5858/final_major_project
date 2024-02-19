@@ -1,5 +1,6 @@
 
 import 'package:final_major_project/page/home_screen.dart';
+import 'package:final_major_project/try/user_booked_tickets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +15,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _page=[
     Home_Screen(),
-    Container(
-      color: Colors.green,
-      child: Center(
-        child: Text('Page 2'),
-      ),
-    ),
+    User_Booked_Tickets(),
     Container(
       color: Colors.orange,
       child: Center(
@@ -29,9 +25,16 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var i=FirebaseAuth.instance.currentUser;
+    print("${i?.uid} and ${i?.email}");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Ticket booking"),),
       body: _page[_currentIndex],
       bottomNavigationBar: Container(
         margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),

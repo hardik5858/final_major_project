@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../page/admin/bus_ticket_data.dart';
+
 var db = FirebaseFirestore.instance;
 
 void add_Userdata() {
@@ -30,8 +32,10 @@ Future<void> setUserType(String type,String uid,TextEditingController _Email,Tex
     'email':_Email.text,
     'userType':type,
     'uid':uid,
-    'password':_password
+    'password':_password.text
   });
+
+  print("hello");
 }
 
 Future<bool> setBusDetail(TextEditingController _from,TextEditingController _to,TextEditingController _start_time,TextEditingController _end_time,TextEditingController _price,TextEditingController _sits,TextEditingController _bus_name,String _bus_type) async{
@@ -51,13 +55,42 @@ Future<bool> setBusDetail(TextEditingController _from,TextEditingController _to,
     };
     await FirebaseFirestore.instance.collection("bus_Time_Table").add(data).then((documentSnapshot){
       print("Added Data with ID: ${documentSnapshot.id}");
-
     });
     result=true;
   }catch(e){
     print("Faild add $e");
     result=false;
   }
+  completer.complete(result);
+  return completer.future;
+}
+
+Future<bool> setBusDetail2(Store_Bus_Data store_bus_data) async{
+  Completer<bool> completer = Completer<bool>();
+  bool result = false;
+  try{
+    final data=<String,dynamic>{
+      "from":store_bus_data.from,
+      "to":store_bus_data.to,
+      "start_time":store_bus_data.start_time,
+      "end_time":store_bus_data.end_time,
+      "bus_name":store_bus_data.bus_name,
+      "bus_type":store_bus_data.bus_type,
+      "price":store_bus_data.price,
+      "sit":store_bus_data.sits,
+      "booked":null
+    };
+
+    await FirebaseFirestore.instance.collection("bus_Time_Table").add(data).then((documentSnapshot){
+      print("Added Data with ID: ${documentSnapshot.id}");
+
+    });
+    result=true;
+  }catch (e){
+    print("Faild add $e");
+    result=false;
+  }
+
   completer.complete(result);
   return completer.future;
 }

@@ -16,8 +16,7 @@ class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: StreamBuilder(
-        stream:
-        FirebaseFirestore.instance.collection("bus_Time_Table").snapshots(),
+        stream:FirebaseFirestore.instance.collection("bus_Time_Table").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -171,8 +170,7 @@ class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
                               child: Row(
                                 children: [
                                   Text("Price: "),
-                                  Text(
-                                    documentData?['price'].toUpperCase(),
+                                  Text("${documentData?['price']}",
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w500),
@@ -202,8 +200,7 @@ class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
                               child: Row(
                                 children: [
                                   Text("Total Sits:"),
-                                  Text(
-                                    documentData?['sit'].toUpperCase(),
+                                  Text("${documentData?['sit']}",
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w500),
