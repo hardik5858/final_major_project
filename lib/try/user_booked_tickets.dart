@@ -102,23 +102,20 @@ class _User_Booked_TicketsState extends State<User_Booked_Tickets> {
                                       fontSize: 20, fontWeight: FontWeight.w500))
                             ],
                           ),
-                          Text("₹ ${documentData?['price']}",
+                          Text("₹ ${documentData?['total_amount']}",
                               style:
                               TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
                         ],
                       ),
-                      Text("${documentData?['selected_tickets']}",
-                        style: TextStyle(fontSize: 11, color: Colors.green),
-                      ),
                       SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
                       Row(
                         children: [
                           Text("Select Ticket: "),
                           for(int i=0;i<documentData?['selected_tickets'].length;i++)
                             Container(
-                              padding:EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                              padding:EdgeInsets.symmetric(horizontal: 5, vertical: 4),
                               margin: EdgeInsets.only(left: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -166,9 +163,21 @@ class _User_Booked_TicketsState extends State<User_Booked_Tickets> {
                           borderRadius: BorderRadius.circular(5),
                           color: Color.fromARGB(255, 248, 232, 233),
                         ),
-                        child: Center(
-                          child: Text(
-                            "Return trip redDeal : Min 10% off on return ticket",
+                        child: GestureDetector(
+                          onTap: (){
+                            String Document_id=snapshot.data!.docs[index].id;
+                            String bus_id=documentData?['bus_uid'];
+                            FirebaseFirestore.instance.collection("booked_tickets").doc(Document_id).delete();
+                            FirebaseFirestore.instance.collection("bus_Time_Table").doc(bus_id).update({
+                              'booked':FieldValue.arrayRemove(documentData?['selected_tickets'])
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text("Delete Data Successfully")));
+                          },
+                          child: Center(
+                            child: Text(
+                              "Cencel",
+                            ),
                           ),
                         ),
                       )

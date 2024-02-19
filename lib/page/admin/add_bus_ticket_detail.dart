@@ -11,6 +11,7 @@ class Bus_Ticket_Detail extends StatefulWidget {
 }
 
 class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
+  var r=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
