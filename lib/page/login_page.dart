@@ -1,5 +1,6 @@
 import 'package:final_major_project/backend/firebase_backend.dart';
 import 'package:final_major_project/page/admin/login_admin.dart';
+import 'package:final_major_project/page/registration_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,9 +24,14 @@ class _Login_PageState extends State<Login_Page> {
 
   MoveToHome() async {
     if (_formKey.currentState!.validate()) {
-      firebase_login(context, _LoginEmail, _LoginPassword);
-      _LoginEmail.clear();
-      _LoginPassword.clear();
+      bool reset=await firebase_login(context, _LoginEmail, _LoginPassword);
+
+      setState(() {
+        if(reset){
+          _LoginEmail.clear();
+          _LoginPassword.clear();
+        }
+      });
       setState(() {
         _error_value = false;
       });
@@ -178,8 +184,7 @@ class _Login_PageState extends State<Login_Page> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, MyRoutes.registrationpage);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Registration_Page()));
                                     },
                                     child: Text(
                                       "Sign up",

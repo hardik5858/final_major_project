@@ -1,4 +1,5 @@
 import 'package:final_major_project/backend/firestor_backend.dart';
+import 'package:final_major_project/backend/variable_data.dart';
 import 'package:final_major_project/page/result_bus_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -59,6 +60,7 @@ class _Search_busState extends State<Search_bus> {
       formattedDate=formattedDate+DateFormat("hh:mm a").format(now);
       // Parse the formatted date string into a DateTime variable
       selectedDate = DateFormat("yyyy-MM-dd hh:mm a").parse(formattedDate);
+      Data_Variable.selectedDate=selectedDate;
       print('Parsed DateTime: $selectedDate');
       print(formattedDate);
       return 'Today ${DateFormat('dd-MM hh:mm a').format(selectedDate)}';

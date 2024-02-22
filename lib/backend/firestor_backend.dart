@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../page/admin/bus_ticket_data.dart';
+import '../try/add_top_destination.dart';
 
 var db = FirebaseFirestore.instance;
 
@@ -91,6 +91,50 @@ Future<bool> setBusDetail2(Store_Bus_Data store_bus_data) async{
     result=false;
   }
 
+  completer.complete(result);
+  return completer.future;
+}
+
+Future<bool> setBusDetail3(Store_Bus_Data_Top_Destination store_bus_data) async{
+  Completer<bool> completer = Completer<bool>();
+  bool result = false;
+  List<String> facalityName=[];
+  if (store_bus_data.charging_port) facalityName.add("Charging USB Port");
+  if (store_bus_data.ac_bus) facalityName.add("Ac Compartment");
+  if (store_bus_data.internate) facalityName.add("Wifi Internet");
+  if (store_bus_data.cctv) facalityName.add("CCTV");
+  if (store_bus_data.reading_light) facalityName.add("Reading Light");
+  if (store_bus_data.water_bottle) facalityName.add("Water Bottle");
+
+  try{
+    final data=<String,dynamic>{
+      "to":store_bus_data.to,
+      "start_time":store_bus_data.start_time,
+      "end_time":store_bus_data.end_time,
+      "bus_name":store_bus_data.bus_name,
+      "bus_type":store_bus_data.bus_type,
+      "price":store_bus_data.price,
+      "sit":store_bus_data.sits,
+      "facility":{
+        if (store_bus_data.charging_port) "Charging USB Port": true,
+        if (store_bus_data.ac_bus) "Ac Compartment": true,
+        if (store_bus_data.internate) "Wifi Internet": true,
+        if (store_bus_data.cctv) "CCTV": true,
+        if (store_bus_data.reading_light) "Reading Light": true,
+        if (store_bus_data.water_bottle) "Water Bottle": true,
+      },
+      "facility_name":facalityName,
+      "booked":null,
+    };
+
+    await FirebaseFirestore.instance.collection("Top Destination").add(data).then((documentSnapshot){
+      print("Added Data with ID: ${documentSnapshot.id}");
+    });
+    return true;
+  }catch(e){
+    print("Faild add $e");
+    result=false;
+  }
   completer.complete(result);
   return completer.future;
 }

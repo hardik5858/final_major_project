@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserDataScreen extends StatelessWidget {
+class UserDataScreen extends StatefulWidget{
+  @override
+  State<UserDataScreen> createState() => _UserDataScreenState();
+}
+
+class _UserDataScreenState extends State<UserDataScreen> {
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -48,7 +53,6 @@ class UserDataScreen extends StatelessWidget {
     );
   }
 }
-
 
 // class UserListScreen extends StatelessWidget {
 //   @override

@@ -1,29 +1,34 @@
 import 'package:final_major_project/backend/firestor_backend.dart';
+import 'package:final_major_project/backend/variable_data.dart';
+import 'package:final_major_project/page/admin/bus_ticket_data.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class Admin_Add_Bus_Data extends StatefulWidget {
-  const Admin_Add_Bus_Data({super.key});
+class Add_Top_Destination extends StatefulWidget {
+  const Add_Top_Destination({super.key});
 
   @override
-  State<Admin_Add_Bus_Data> createState() => _Admin_Add_Bus_DataState();
+  State<Add_Top_Destination> createState() => _Add_Top_DestinationState();
 }
 
-class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
-  TextEditingController _add_form=TextEditingController();
+class _Add_Top_DestinationState extends State<Add_Top_Destination> {
   TextEditingController _add_to=TextEditingController();
   TextEditingController _add_start=TextEditingController();
   TextEditingController _add_end=TextEditingController();
   TextEditingController _add_price=TextEditingController();
   TextEditingController _add_sits=TextEditingController();
   TextEditingController _add_bus_name=TextEditingController();
-
   final _formkey=GlobalKey<FormState>();
-  List<String> bus_types=["LOCAL","EXPRESS","SLEEPER COACH","VOLVO"];
-  String selectedValue="LOCAL";
 
+  bool charging_port=false;
+  bool ac_bus=false;
+  bool internate=false;
+  bool cctv=false;
+  bool reading_light=false;
+  bool water_bottle=false;
+
+  List<String> bus_types=["EXPRESS","SLEEPER COACH","VOLVO"];
+  String selectedValue="";
   List<String> cityName=['ahmedabad','amreli','anand','aravalli','banaskantha','bharuch','bhavnagar','botad','chhota udaipur','dahod','dang','devbhumi dwarka','gandhinagar','gir somnath','jamnagar','kheda','kutch','mahisagar','mehsana','morbi','narmada','navsari','panchmahal','patan','porbandar','rajkot','sabarkantha','surat','surendranagar','tapi','vadodara','valsad'];
-
   valid(String value){
     String retval="" ;
     for(int i=0;i<cityName.length;i++){
@@ -37,12 +42,11 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
     return retval;
   }
 
-
   bool _error_value=false;
+
   Add_Data()async{
     if(_formkey.currentState!.validate()){
-      Store_Bus_Data store_bus_data=new Store_Bus_Data();
-      store_bus_data.from=_add_form.text;
+      Store_Bus_Data_Top_Destination store_bus_data=new Store_Bus_Data_Top_Destination();
       store_bus_data.to=_add_to.text;
       store_bus_data.start_time=_add_start.text;
       store_bus_data.end_time=_add_end.text;
@@ -50,14 +54,18 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
       store_bus_data.bus_type=selectedValue;
       store_bus_data.price=int.parse(_add_price.text);
       store_bus_data.sits=int.parse(_add_sits.text);
+      store_bus_data.charging_port=charging_port;
+      store_bus_data.ac_bus=ac_bus;
+      store_bus_data.internate=internate;
+      store_bus_data.cctv=cctv;
+      store_bus_data.reading_light=reading_light;
+      store_bus_data.water_bottle=water_bottle;
 
-      // bool reset=await setBusDetail(_add_form, _add_to, _add_start, _add_end, _add_price, _add_sits,_add_bus_name ,selectedValue);
-      bool reset=await setBusDetail2(store_bus_data);
-        print("hello $reset");
+      bool reset=await setBusDetail3(store_bus_data);
+      print("hello $reset");
 
       setState(() {
         if(reset==true){
-          _add_form.clear();
           _add_to.clear();
           _add_start.clear();
           _add_end.clear();
@@ -65,9 +73,14 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
           _add_sits.clear();
           _add_bus_name.clear();
           selectedValue=bus_types[0];
+          charging_port=false;
+          ac_bus=false;
+          internate=false;
+          cctv=false;
+          reading_light=false;
+          water_bottle=false;
         }
         _error_value=false;
-
       });
     }else{
       setState(() {
@@ -75,79 +88,32 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 236, 236, 236),
-      appBar: AppBar(title: Text("Add Information For Bus "),),
+      backgroundColor: Data_Variable.backgroundColor,
+      appBar: AppBar(title: Text("Top Destination Place"),),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
               Form(
-                key: _formkey,
-                child: Container(
-                  margin: EdgeInsets.only(left: 5,right: 5,top: 10,bottom: 20),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 248, 233, 200),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2
-                    )
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
+                  key: _formkey,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 5,right: 5,top: 10,bottom: 20),
+                      padding:EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 248, 233, 200),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: Colors.black,
+                            width: 2
+                        )
+                    ),
+                    child:Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Bus Start Location",style: TextStyle(fontSize: 15,color: Colors.black),),
-                        SizedBox(height: 8,),
-                        Container(
-                          height: 59,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                color: Colors.white
-                            ),
-                            child: TextFormField(
-                              controller: _add_form,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                borderSide:BorderSide(
-                                  width: 1,
-                                  color: Colors.black
-                                )
-                                ),
-                                prefixIcon: Icon(Icons.location_searching,color: Colors.green,),
-                                labelText: "From",
-                                hintText: "Your Location",
-                              ),
-                              validator: (value){
-                                if(value!.isEmpty){
-                                  return "This Field is Empty";
-                                }
-                                var re=valid(value.toString());
-                                if(re!=null){
-                                  return re;
-                                }
-                                return null;
-                              },
-                              onTap: (){
-                                if(_error_value){
-                                  setState(() {
-                                    _formkey.currentState?.reset();
-                                    _error_value=false;
-                                  });
-                                }
-                              },
-                            ),
-                          ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text("Bus End Location",style: TextStyle(fontSize: 15,color: Colors.black),),
+                        Text("Enter Place",style: TextStyle(fontSize: 15,color: Colors.black),),
                         SizedBox(height: 8,),
                         Container(
                           height: 59,
@@ -158,26 +124,20 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                           child: TextFormField(
                             controller: _add_to,
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        width: 1,
-                                        color: Colors.yellow
-                                    )
-                                ),
-                                prefixIcon: Icon(Icons.location_on,color: Colors.red,),
-                                labelText: "To",
-                                hintText: "Destination"
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:BorderSide(
+                                      width: 1,
+                                      color: Colors.black
+                                  )
+                              ),
+                              prefixIcon: Icon(Icons.location_searching,color: Colors.green,),
+                              labelText: "Enter Pacle",
                             ),
                             validator: (value){
                               if(value!.isEmpty){
                                 return "This Field is Empty";
                               }
-
-                              if (_add_form.text==_add_to.text){
-                                return "Same City Name Not Allow";
-                              }
-
                               var re=valid(value.toString());
                               if(re!=null){
                                 return re;
@@ -325,22 +285,22 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                           height: 59,
                           width: 220,
                           child: DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border:OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(width: 3,color: Colors.white)
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border:OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(width: 3,color: Colors.white)
+                                ),
+                                // enabledBorder: OutlineInputBorder(
+                                //   borderRadius: BorderRadius.circular(10),
+                                //   borderSide: BorderSide(width: 2,color: Colors.black)
+                                // )
                               ),
-                              // enabledBorder: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(10),
-                              //   borderSide: BorderSide(width: 2,color: Colors.black)
-                              // )
-                            ),
                               items: bus_types.map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                    child: Text(value),
+                                  child: Text(value),
                                 );
                               }).toList(),
                               onChanged: (String? newValue){
@@ -372,13 +332,13 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                               autofocus: true,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(width: 1,color: Colors.blue)
-                                ),
-                                prefixIcon: Icon(Icons.currency_rupee,color: Colors.blue,),
-                                // labelText:"End Time",
-                                hintText: "Price"
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(width: 1,color: Colors.blue)
+                                  ),
+                                  prefixIcon: Icon(Icons.currency_rupee,color: Colors.blue,),
+                                  // labelText:"End Time",
+                                  hintText: "Price"
                               ),
                               validator: (value){
                                 if(value!.isEmpty){
@@ -397,7 +357,7 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                             ),
                           ),
                           SizedBox(
-                            width:MediaQuery.of(context).size.width * 0.4/3
+                              width:MediaQuery.of(context).size.width * 0.4/3
                           ),
                           Container(
                             height: 59,
@@ -408,13 +368,13 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                             ),
                             child: TextFormField(
                               controller: _add_sits,
-                                autofocus: true,
-                                keyboardType: TextInputType.number,
+                              autofocus: true,
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(width: 1,color: Colors.blue)
-                                ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(width: 1,color: Colors.blue)
+                                  ),
                                   hintText: "Sit"
                               ),
                               validator: (value){
@@ -431,6 +391,117 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                             ),
                           )
                         ],),
+                        SizedBox(height: 15,),
+                        Text("Bus Facility",style: TextStyle(fontSize: 15,color: Colors.black),),
+                        SizedBox(height: 8,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Data_Variable.buttoncolor,
+                                        value: charging_port,
+                                        onChanged:(value){
+                                          setState(() {
+                                            print(value);
+                                            charging_port=value!;
+                                          });
+                                        }),
+                                    SizedBox(width: 5,),
+                                    Text("Bus Charging Port",style: TextStyle(fontSize: 15,color: Colors.black),),
+
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Data_Variable.buttoncolor,
+                                        value: ac_bus,
+                                        onChanged:(value){
+                                          setState(() {
+                                            print(value);
+                                            ac_bus=value!;
+                                          });
+                                        }),
+                                    SizedBox(width: 5,),
+                                    Text("Ac Bus",style: TextStyle(fontSize: 15,color: Colors.black),),
+
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Data_Variable.buttoncolor,
+                                        value: internate,
+                                        onChanged:(value){
+                                          setState(() {
+                                            print(value);
+                                            internate=value!;
+                                          });
+                                        }),
+                                    SizedBox(width: 5,),
+                                    Text("Wifi Internate",style: TextStyle(fontSize: 15,color: Colors.black),),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Data_Variable.buttoncolor,
+                                        value: cctv,
+                                        onChanged:(value){
+                                          setState(() {
+                                            print(value);
+                                            cctv=value!;
+                                          });
+                                        }),
+                                    SizedBox(width: 5,),
+                                    Text("CCTV",style: TextStyle(fontSize: 15,color: Colors.black),),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Data_Variable.buttoncolor,
+                                        value: reading_light,
+                                        onChanged:(value){
+                                          setState(() {
+                                            print(value);
+                                            reading_light=value!;
+                                          });
+                                        }),
+                                    SizedBox(width: 5,),
+                                    Text("Reading Light",style: TextStyle(fontSize: 15,color: Colors.black),),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Data_Variable.buttoncolor,
+                                        value: water_bottle,
+                                        onChanged:(value){
+                                          setState(() {
+                                            print(value);
+                                            water_bottle=value!;
+                                          });
+                                        }),
+                                    SizedBox(width: 5,),
+                                    Text("Water Bottle",style: TextStyle(fontSize: 15,color: Colors.black),),
+
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                         SizedBox(height: 25,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -459,21 +530,17 @@ class _Admin_Add_Bus_DataState extends State<Admin_Add_Bus_Data> {
                           ],
                         ),
                       ],
-                    ),
-                  ),
-                ),
+                    )
+                  )
               )
             ],
           ),
-        )
+        ),
       ),
     );
   }
 }
-
-
-class Store_Bus_Data{
-  String from="";
+class Store_Bus_Data_Top_Destination{
   String to="";
   String start_time="";
   String end_time="";
@@ -481,4 +548,10 @@ class Store_Bus_Data{
   String bus_type="";
   int price=0;
   int sits=0;
+  bool charging_port=false;
+  bool ac_bus=false;
+  bool internate=false;
+  bool cctv=false;
+  bool reading_light=false;
+  bool water_bottle=false;
 }

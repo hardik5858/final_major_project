@@ -6,16 +6,8 @@ import 'package:final_major_project/page/confirm%20ticket.dart';
 import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:final_major_project/page/registration_page.dart';
-import 'package:final_major_project/page/result_bus_data.dart';
-import 'package:final_major_project/page/select_ticket.dart';
-import 'package:final_major_project/page/splash_screen.dart';
-import 'package:final_major_project/temp.dart';
-import 'package:final_major_project/temp2.dart';
-import 'package:final_major_project/page/select_ticket_sit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'my_routes.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true
       ),
-      home:Splash_Screen(),
+      home:Admin_Home_Page(),
       routes: {
         '/user_login_page':(context)=>Login_Page(),
         '/user_registration':(context)=>Registration_Page(),

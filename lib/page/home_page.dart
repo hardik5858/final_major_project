@@ -1,6 +1,6 @@
 
 import 'package:final_major_project/page/home_screen.dart';
-import 'package:final_major_project/try/user_booked_tickets.dart';
+import 'package:final_major_project/page/user_booked_tickets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

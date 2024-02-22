@@ -1,4 +1,5 @@
 import 'package:final_major_project/backend/firebase_backend.dart';
+import 'package:final_major_project/page/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -226,8 +227,7 @@ class _Registration_PageState extends State<Registration_Page> {
                           children: [
                             TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, MyRoutes.loginpage);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
                                 },
                                 child: Text(
                                   "< Login Screen",

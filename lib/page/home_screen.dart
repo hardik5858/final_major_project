@@ -1,8 +1,8 @@
 import 'package:final_major_project/backend/firebase_backend.dart';
 import 'package:final_major_project/widget/search_bus.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:final_major_project/widget/slider.dart';
 import 'package:flutter/material.dart';
+
+import '../widget/slider.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -31,7 +31,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                     indent: 10,
                     endIndent: 10,
                   ),
-                  // Slider_Indicator()
+                  Slider_Indicator(),
                   ElevatedButton(onPressed: (){
                     signOut(context);
                   },

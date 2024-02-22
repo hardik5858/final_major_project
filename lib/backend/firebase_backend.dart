@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_major_project/backend/firestor_backend.dart';
 import 'package:final_major_project/page/admin/admin_home_page.dart';
+import 'package:final_major_project/page/home_page.dart';
 import 'package:final_major_project/page/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,15 +13,17 @@ import '../my_routes.dart';
 
 
 
-void firebase_login (BuildContext context,TextEditingController _LoginEmail,TextEditingController _LoginPassword) async {
-    try {
+Future<bool> firebase_login (BuildContext context,TextEditingController _LoginEmail,TextEditingController _LoginPassword) async {
+  Completer<bool> comparable=Completer<bool>() ;
+  bool result=false;
+  try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
          email: _LoginEmail.text,
         password: _LoginPassword.text,
       );
-      Navigator.pushNamed(context, MyRoutes.homepage);
-      _LoginEmail.clear();
-      _LoginPassword.clear();
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+      result=true;
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -35,7 +40,10 @@ void firebase_login (BuildContext context,TextEditingController _LoginEmail,Text
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Fill propar detail")));
       }
+      result=false;
     }
+    comparable.complete(result);
+    return comparable.future;
   }
 
 void firebase_create_user(BuildContext context,TextEditingController _ReEmail,TextEditingController _RePassword) async{
@@ -49,7 +57,7 @@ void firebase_create_user(BuildContext context,TextEditingController _ReEmail,Te
     print(_ReEmail.text);
     String uid=FirebaseAuth.instance.currentUser?.uid ?? "";
     setUserType("user",uid,_ReEmail,_RePassword);
-    Navigator.pushNamed(context, MyRoutes.homepage);
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
   }catch (e) {
     print(e);
   }

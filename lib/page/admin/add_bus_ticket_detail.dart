@@ -11,10 +11,11 @@ class Bus_Ticket_Detail extends StatefulWidget {
 }
 
 class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
-  var r=0;
+  List<int> totalBookedTicket=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Bus Data"),),
       backgroundColor: Colors.grey,
       body: StreamBuilder(
         stream:FirebaseFirestore.instance.collection("bus_Time_Table").snapshots(),
@@ -221,8 +222,7 @@ class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
                               child: Row(
                                 children: [
                                   Text("Available: "),
-                                  Text("00"
-                                    ,
+                                  Text("${documentData?['booked'] != null ? '${documentData?['sit']-documentData?['booked'].length}' : documentData?['sit']}",
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w500),
@@ -260,13 +260,18 @@ class _Bus_Ticket_DetailState extends State<Bus_Ticket_Detail> {
               });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Admin_Add_Bus_Data()));
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Admin_Add_Bus_Data()));
+            },
+            child: Icon(Icons.add),
+          ),
+        ],
+      )
     );;
   }
 }

@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_major_project/page/admin/add_bus_ticket_detail.dart';
-import 'package:final_major_project/page/home_page.dart';
+import 'package:final_major_project/backend/variable_data.dart';
 import 'package:final_major_project/page/select_ticket_sit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +97,8 @@ class _Confirm_Ticket_sitState extends State<Confirm_Ticket_sit> {
       'card_cvv':_card_cvv.text,
       'bus_uid':selectticket.Bus_Ticket_Document,
       'user_uid':userdatapaket.useruid,
-      'timestamp': FieldValue.serverTimestamp()
+      'timestamp': FieldValue.serverTimestamp(),
+      'store_date':Data_Variable.selectedDate
     });
 
     DocumentReference td=FirebaseFirestore.instance.collection("bus_Time_Table").doc(selectticket.Bus_Ticket_Document);

@@ -1,8 +1,9 @@
 import 'package:final_major_project/page/admin/add_bus_ticket_detail.dart';
-import 'package:final_major_project/page/admin/admin_home_screen.dart';
 import 'package:final_major_project/page/admin/all_user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
+
+import '../../try/add_top_destination.dart';
+import '../all_tikcets_show.dart';
 
 class Admin_Home_Page extends StatefulWidget {
   const Admin_Home_Page({super.key});
@@ -14,16 +15,16 @@ class Admin_Home_Page extends StatefulWidget {
 class _Admin_Home_PageState extends State<Admin_Home_Page> {
   int _currentIndex=0;
   final List<Widget> _page=[
-   Admin_Home_Screen(),
+    All_Tickets_Show_Admin(),
     Bus_Ticket_Detail(),
-   UserDataScreen(),
+    Add_Top_Destination(),
   ];
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Admin Home Page"),),
+      // appBar: AppBar(title: Text("Admin Home Page"),),
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       body: _page[_currentIndex],
       bottomNavigationBar: Container(
